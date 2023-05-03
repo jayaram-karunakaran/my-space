@@ -1,24 +1,31 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { ApiRes } from "./constants/apiRes";
+import Loader from "./components/loader";
+import Home from "./components/home";
+import useScrollDirection from "./hook/useScrollDirecrtion";
+import useCountDown from "./hook/useCountDown";
+import TopBar from "./components/topBar";
+
+import "./styles/App.css";
+import "./styles/fonts.scss";
+import "./styles/animations.scss";
+
 
 function App() {
+  const scroll = useScrollDirection();
+  const { countDown, timer } = useCountDown();
+
+  const sortedArr: typeof ApiRes = ApiRes.reduce((acc: any, element) => {
+    return element.id === 3 ? [element, ...acc] : [...acc, element];
+  }, []);
+
+  console.log(sortedArr);
+
+  if (countDown > 0 || timer < 100) return <Loader {...{ countDown, timer }} />;
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <TopBar {...{ scroll }} />
+      <Home {...{ sortedArr }} />
     </div>
   );
 }
