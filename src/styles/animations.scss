@@ -1,61 +1,147 @@
+$starFieldWidth: 2560;
+$starFieldHeight: 2560;
+$starStartOffset: 600px;
 
-$n: 8; 
+$starOneScrollDuration: 100s;
+$starTwoScrollDuration: 125s;
+$starThreeScrollDuration: 175s;
+$numStarOneStars: 1700;
+$numStarTwoStars: 700;
+$numStarThreeStars: 200;
+$numComet: 10;
+
+@function create-stars($n) {
+  $stars: "#{random($starFieldWidth)}px #{random($starFieldHeight)}px #FFF";
+
+  @for $i from 2 through $n {
+    $stars: "#{$stars} , #{random($starFieldWidth)}px #{random($starFieldHeight)}px #FFF";
+  }
+  @return unquote($stars);
+}
+
+@mixin star-template($numStars, $starSize, $scrollSpeed) {
+  z-index: 10;
+  width: $starSize;
+  height: $starSize;
+  border-radius: 50%;
+  background: transparent;
+  box-shadow: create-stars($numStars);
+  animation: animStar $scrollSpeed linear infinite;
+  &:after {
+    content: " ";
+    top: -$starStartOffset;
+    width: $starSize;
+    height: $starSize;
+    border-radius: 50%;
+    position: absolute;
+    background: transparent;
+    box-shadow: create-stars($numStars);
+  }
+}
+
+@mixin shooting-star-template($numStars, $starSize, $speed) {
+  z-index: 10;
+  width: $starSize;
+  height: $starSize + 80px;
+  border-top-left-radius: 50%;
+  border-top-right-radius: 50%;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  background: linear-gradient(
+    to top,
+    rgba(255, 255, 255, 0),
+    rgba(255, 255, 255, 1)
+  );
+  animation: animShootingStar $speed linear infinite;
+}
+
+.stars {
+  @include star-template($numStarOneStars, 1px, $starOneScrollDuration);
+}
+.stars2 {
+  @include star-template($numStarTwoStars, 2px, $starTwoScrollDuration);
+}
+.stars3 {
+  @include star-template($numStarThreeStars, 3px, $starThreeScrollDuration);
+}
+.comet {
+  @include shooting-star-template($numComet, 5px, 10s);
+}
+
+@keyframes animStar {
+  from {
+    transform: translateY(0px);
+  }
+  to {
+    transform: translateY(-#{$starFieldHeight}px)
+      translateX(-#{$starFieldWidth}px);
+  }
+}
+
+@keyframes animShootingStar {
+  from {
+    transform: translateY(0px) translateX(0px) rotate(-45deg);
+    opacity: 1;
+    height: 5px;
+  }
+  to {
+    transform: translateY(-#{$starFieldHeight}px)
+      translateX(-#{$starFieldWidth}px) rotate(-45deg);
+    opacity: 1;
+    height: 800px;
+  }
+}
+
+
+
+$n: 8;
 $s: 300;
 
-$shadow: ();
-
-.star {
-    width: 1px;
+@for $i from 1 through $n {
+  $v: random(90) + 9;
+  $h: random(250) + 50;
+  $d: random(70) / 10 + 3;
+  .meteor-#{$i} {
+    position: absolute;
+    top: $h + px;
+    left: $v * 1%;
+    width: 300px;
     height: 1px;
-    background: transparent;
-    // box-shadow: $shadow;
-  }
-  
-  @for $i from 1 through $n {
-    $v: random(90) + 9;
-    $h: random(250) + 50;
-    $d: random(70)/10 + 3;
-    .meteor-#{$i} {
+    transform: rotate(-45deg);
+    background-image: linear-gradient(to right, #fff, rgba(255, 255, 255, 0));
+    animation: meteor $d + s linear infinite;
+    &:before {
+      content: "";
       position: absolute;
-      top: $h + px;
-      left: $v*1%;
-      width: 300px;
-      height: 1px;
-      transform: rotate(-45deg);
-      background-image: linear-gradient(to right, #fff, rgba(255,255,255,0));
-      animation: meteor $d+s linear  infinite;
-      &:before {
-        content: "";
-        position: absolute;
-        width: 4px;
-        height: 5px;
-        border-radius: 50%;
-        margin-top: -2px;
-        background: rgba(#fff,.7);
-        box-shadow: 0 0 15px 3px #fff;
-      }
-      
+      width: 4px;
+      height: 5px;
+      border-radius: 50%;
+      margin-top: -2px;
+      background: rgba(#fff, 0.7);
+      box-shadow: 0 0 15px 3px #fff;
     }
   }
-  
-  @keyframes meteor {
-    0% {
-      opacity: 1;
-      margin-top: -300px;
-      margin-right: -300px;
-    }
-    12% {
-      opacity: 0;
-    }
-    15% {
-      margin-top: 300px;
-      margin-left: -600px;
-      opacity: 0;
-    }
-    100% {
-      opacity: 0;
-    }
+}
+
+@keyframes meteor {
+  0% {
+    opacity: 1;
+    margin-top: -300px;
+    margin-right: -300px;
   }
+  12% {
+    opacity: 0;
+  }
+  15% {
+    margin-top: 300px;
+    margin-left: -600px;
+    opacity: 0;
+  }
+  100% {
+    opacity: 0;
+  }
+}
 
 
 .circleCss {

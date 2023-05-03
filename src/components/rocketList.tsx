@@ -5,12 +5,12 @@ import { useNavigate } from "react-router-dom";
 
 const RocketList = () => {
   const navigate = useNavigate();
-  const [rocketList, setSocketList] = useState<any[]>([]); //temp
+  const [rocketList, setRocketList] = useState<any[]>([]); //temp
 
   useEffect(() => {
     async function getAllRockets() {
       const res = await axios.get("https://api.spacexdata.com/v4/rockets");
-      if (res?.data?.length) setSocketList(res.data);
+      if (res?.data?.length) setRocketList(res.data);
     }
     getAllRockets();
   }, []);

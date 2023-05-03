@@ -1,4 +1,4 @@
-export const ApiRes =[
+export const HomePageDetails =[
     {
         "id": 39,
         "position": 2,

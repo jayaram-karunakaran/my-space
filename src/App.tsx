@@ -1,4 +1,4 @@
-import { ApiRes } from "./constants/apiRes";
+import { HomePageDetails } from "./constants/apiRes";
 import Loader from "./components/loader";
 import Home from "./components/home";
 import useScrollDirection from "./hook/useScrollDirecrtion";
@@ -9,16 +9,13 @@ import "./styles/App.css";
 import "./styles/fonts.scss";
 import "./styles/animations.scss";
 
-
 function App() {
   const scroll = useScrollDirection();
   const { countDown, timer } = useCountDown();
 
-  const sortedArr: typeof ApiRes = ApiRes.reduce((acc: any, element) => {
-    return element.id === 3 ? [element, ...acc] : [...acc, element];
+  const sortedArr = HomePageDetails.reduce((acc: any, element) => {
+    return element?.id === 3 ? [element, ...acc] : [...acc, element];
   }, []);
-
-  console.log(sortedArr);
 
   if (countDown > 0 || timer < 100) return <Loader {...{ countDown, timer }} />;
 

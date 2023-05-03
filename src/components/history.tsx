@@ -2,6 +2,11 @@ import { useState } from "react";
 import { HistoryData } from "../constants/history";
 import { monthNames } from "../constants/month";
 
+export function getDate(date:string){
+  let spilt = date.substring(0,10).split('-');
+  return `${spilt[2]} ${monthNames[parseInt(spilt[1]) - 1]} ${spilt[0]}`
+}
+
 const History = () => {
   const [history, setHistory] = useState(HistoryData);
   console.log(history);
@@ -13,12 +18,6 @@ const History = () => {
   //   }
   //   getAllRockets();
   // }, []);
-
-  function getDate(date:string){
-    let spilt = date.substring(0,10).split('-');
-    return `${spilt[2]} ${monthNames[parseInt(spilt[1]) - 1]} ${spilt[0]}`
-  }
-
   return (
     <div
       className="parallax"
