@@ -1,0 +1,54 @@
+.parallax {
+  background-attachment: fixed;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  width: 100%;
+  height: 100%;
+}
+
+.underline-on-hover {
+  display: inline-block;
+  position: relative;
+  color: white;
+}
+.underline-on-hover:after {
+  content: "";
+  position: absolute;
+  width: 100%;
+  transform: scaleX(0);
+  height: 2px;
+  bottom: 0;
+  left: 0;
+  background-color: white;
+  transform-origin: bottom right;
+  transition: transform 0.25s ease-out;
+}
+.underline-on-hover:hover:after {
+  transform: scaleX(1);
+  transform-origin: bottom left;
+}
+
+#parent .hidden-child{
+  visibility: hidden;
+}
+#parent:hover .hidden-child{
+  visibility: visible;
+  animation: rightSlide 0.2s ease-in both;
+}
+
+@keyframes rightSlide {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(10%, 0, 0);
+  }
+}
+
+.flipImage{
+  -webkit-transform: scaleX(-1);
+  transform: scaleX(-1);
+}
