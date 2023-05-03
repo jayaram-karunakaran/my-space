@@ -8,13 +8,15 @@ const Launches = () => {
   useEffect(() => {
     async function getAllRockets() {
       const res = await axios.get("https://api.spacexdata.com/v4/launches");
-      if (res?.data?.length) setLaunchList(res.data);
-      console.log(res.data[0]);
+      if (res?.data?.length)
+        setTimeout(() => {
+          setLaunchList(res.data);
+        }, 100);
     }
     getAllRockets();
   }, []);
 
-  return (
+  return launch.length ? (
     <div
       className="parallax"
       style={{
@@ -65,14 +67,13 @@ const Launches = () => {
                 >
                   Read article
                 </div>
-
               </div>
             </div>
           ))}
         </div>
       </div>
     </div>
-  );
+  ) : null;
 };
 
 export default Launches;

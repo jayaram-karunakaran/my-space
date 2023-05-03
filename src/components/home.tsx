@@ -9,7 +9,7 @@ const Home = ({ sortedArr }: { sortedArr: any[] }) => (
 
     {sortedArr.map((e, i) => {
       const isFirstIndex = Boolean(i === 0);
-      const { title, callToAction } = e;
+      const { title } = e;
       return (
         <div id={`ele_${i}`} className="relative z-10">
           <div
@@ -30,7 +30,7 @@ const Home = ({ sortedArr }: { sortedArr: any[] }) => (
                   isFirstIndex ? "relative top-1/3 pt-2" : "flex items-center"
                 } h-full`}
               >
-                <TitleSection {...{ i, title, callToAction }} />
+                <TitleSection {...{ i, title,e }} />
               </div>
             </div>
 
